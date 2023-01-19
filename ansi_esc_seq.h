@@ -1,3 +1,7 @@
+/* SPDX-License-Identifier:  MIT
+ * Copyright 2021-2023 Jorengarenar
+ */
+
 #ifndef ANSI_ESC_SEQ_H_
 #define ANSI_ESC_SEQ_H_
 
