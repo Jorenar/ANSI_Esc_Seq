@@ -5,78 +5,146 @@
 #ifndef ANSI_ESC_SEQ_H_
 #define ANSI_ESC_SEQ_H_
 
-// Refer to: http://ascii-table.com/ansi-escape-sequences.php
+// C0 control codes {{{1
 
-#define ANSI_TERM_ESC  "\033"
-#define ANSI_ESC_SEQ(code, ...) TERM_ESC "[" #code #__VA_ARGS__
+#define  ANSI_BEL  "\a"
+#define  ANSI_BS   "\b"
+#define  ANSI_HT   "\t"
+#define  ANSI_LF   "\n"
+#define  ANSI_FF   "\f"
+#define  ANSI_CR   "\r"
+#define  ANSI_ESC  "\033"
 
-// Graphics Mode {{{
+// Fe Escape sequences {{{1
 
-#define  ANSI_RESET  ESC_SEQ(0, m)
+#define  ANSI_SS2  ANSI_ESC "N"
+#define  ANSI_SS3  ANSI_ESC "O"
+#define  ANSI_DCS  ANSI_ESC "P"
+#define  ANSI_CSI  ANSI_ESC "["
+#define  ANSI_ST   ANSI_ESC "\\"
+#define  ANSI_OSC  ANSI_ESC "]"
+#define  ANSI_SOS  ANSI_ESC "X"
+#define  ANSI_PM   ANSI_ESC "^"
+#define  ANSI_APC  ANSI_ESC "_"
 
-#define  ANSI_FG_RGB_SEQ(r,g,b) ESC_SEQ(38;2;r;g;b, m)
-#define  ANSI_BG_RGB_SEQ(r,g,b) ESC_SEQ(48;2;r;g;b, m)
+// CSI sequences {{{1
 
-// Text attributes {{{1
+#define  ANSI_CUU(n)    ANSI_CSI # n "A"
+#define  ANSI_CUD(n)    ANSI_CSI # n "B"
+#define  ANSI_CUF(n)    ANSI_CSI # n "C"
+#define  ANSI_CUB(n)    ANSI_CSI # n "D"
+#define  ANSI_CNL(n)    ANSI_CSI # n "E"
+#define  ANSI_CPL(n)    ANSI_CSI # n "F"
+#define  ANSI_CHA(n)    ANSI_CSI # n "G"
+#define  ANSI_CUP(n,m)  ANSI_CSI # n ";" m "H"
+#define  ANSI_ED(n)     ANSI_CSI # n "J"
+#define  ANSI_EL(n)     ANSI_CSI # n "K"
+#define  ANSI_SU(n)     ANSI_CSI # n "S"
+#define  ANSI_SD(n)     ANSI_CSI # n "T"
+#define  ANSI_HVP(n,m)  ANSI_CSI # n ";" m "f"
+#define  ANSI_SGR(n)    ANSI_CSI # n "m"
+#define  ANSI_DSR       ANSI_CSI "6n"
 
-#define  ANSI_BOLD           ESC_SEQ(1,  m)
+#define  ANSI_SCP  ANSI_CSI "s"
+#define  ANSI_RCP  ANSI_CSI "u"
+#define  ANSI_SCOSC  ANSI_SCP
+#define  ANSI_SCORC  ANSI_RCP
 
-#define  ANSI_ITALIC         ESC_SEQ(3,  m)
-#define  ANSI_ITALIC_OFF     ESC_SEQ(23, m)
+#define  ANSI_DECTCEM_SET    ANSI_CSI "?25h"
+#define  ANSI_DECTCEM_RESET  ANSI_CSI "?25l"
 
-#define  ANSI_UNDERLINE      ESC_SEQ(4,  m)
-#define  ANSI_UNDERLINE_OFF  ESC_SEQ(24, m)
+// Parameters {{{1
+// ED & EL {{{2
 
-#define  ANSI_BLINK_SLOW     ESC_SEQ(5,  m)
-#define  ANSI_BLINK_RAPID    ESC_SEQ(6,  m)
-#define  ANSI_BLINK_OFF      ESC_SEQ(6,  m)
+#define  ANSI_ERASE_CUR2ENDSCR    ANSI_ED(0)
+#define  ANSI_ERASE_CUR2STARTSCR  ANSI_ED(1)
+#define  ANSI_ERASE_SCR           ANSI_ED(2)
+#define  ANSI_ERASE_SAVED_LINES   ANSI_ED(3)
+#define  ANSI_ERASE_CUR2EOL       ANSI_EL(0)
+#define  ANSI_ERASE_SOL2CUR       ANSI_EL(1)
+#define  ANSI_ERASE_LINE          ANSI_EL(2)
 
-#define  ANSI_INVERSE        ESC_SEQ(7,  m)
-#define  ANSI_INVERSE_OFF    ESC_SEQ(27, m)
+// SGR {{{2
 
-#define  ANSI_CROSSED        ESC_SEQ(9, m)
-#define  ANSI_CROSSED_OFF    ESC_SEQ(29, m)
+#define  ANSI_RESET          ANSI_SGR(0)
 
-// Text foreground colors {{{1
+#define  ANSI_BOLD           ANSI_SGR(1)
 
-#define  ANSI_BLACK          ESC_SEQ(30, m)
-#define  ANSI_RED            ESC_SEQ(31, m)
-#define  ANSI_GREEN          ESC_SEQ(32, m)
-#define  ANSI_YELLOW         ESC_SEQ(33, m)
-#define  ANSI_BLUE           ESC_SEQ(34, m)
-#define  ANSI_MAGENTA        ESC_SEQ(35, m)
-#define  ANSI_CYAN           ESC_SEQ(36, m)
-#define  ANSI_GREY           ESC_SEQ(90, m)
-#define  ANSI_WHITE          ESC_SEQ(97, m)
+#define  ANSI_ITALIC         ANSI_SGR(3)
+#define  ANSI_ITALIC_OFF     ANSI_SGR(23)
 
-#define  ANSI_LIGHT_GREY     ESC_SEQ(37, m)
-#define  ANSI_LIGHT_RED      ESC_SEQ(91, m)
-#define  ANSI_LIGHT_GREEN    ESC_SEQ(92, m)
-#define  ANSI_LIGHT_YELLOW   ESC_SEQ(93, m)
-#define  ANSI_LIGHT_BLUE     ESC_SEQ(94, m)
-#define  ANSI_LIGHT_MAGENTA  ESC_SEQ(95, m)
-#define  ANSI_LIGHT_CYAN     ESC_SEQ(96, m)
+#define  ANSI_UNDERLINE      ANSI_SGR(4)
+#define  ANSI_UNDERLINE_OFF  ANSI_SGR(24)
 
-// Text background colors {{{1
+#define  ANSI_BLINK_SLOW     ANSI_SGR(5)
+#define  ANSI_BLINK_RAPID    ANSI_SGR(6)
+#define  ANSI_BLINK_OFF      ANSI_SGR(6)
 
-#define  ANSI_BG_BLACK          ESC_SEQ(40, m)
-#define  ANSI_BG_RED            ESC_SEQ(41, m)
-#define  ANSI_BG_GREEN          ESC_SEQ(42, m)
-#define  ANSI_BG_YELLOW         ESC_SEQ(43, m)
-#define  ANSI_BG_BLUE           ESC_SEQ(44, m)
-#define  ANSI_BG_MAGENTA        ESC_SEQ(45, m)
-#define  ANSI_BG_CYAN           ESC_SEQ(46, m)
-#define  ANSI_BG_GREY           ESC_SEQ(100, m)
-#define  ANSI_BG_WHITE          ESC_SEQ(107, m)
+#define  ANSI_INVERSE        ANSI_SGR(7)
+#define  ANSI_INVERSE_OFF    ANSI_SGR(27)
 
-#define  ANSI_BG_LIGHT_GREY     ESC_SEQ(47, m)
-#define  ANSI_BG_LIGHT_RED      ESC_SEQ(101, m)
-#define  ANSI_BG_LIGHT_GREEN    ESC_SEQ(102, m)
-#define  ANSI_BG_LIGHT_YELLOW   ESC_SEQ(103, m)
-#define  ANSI_BG_LIGHT_BLUE     ESC_SEQ(104, m)
-#define  ANSI_BG_LIGHT_MAGENTA  ESC_SEQ(105, m)
-#define  ANSI_BG_LIGHT_CYAN     ESC_SEQ(106, m)
+#define  ANSI_CROSSED        ANSI_SGR(9)
+#define  ANSI_CROSSED_OFF    ANSI_SGR(29)
 
-// Graphics Mode }}}
+// Colors {{{1
+// Foreground {{{2
+
+#define  ANSI_FG_256_TABLE(n)    ANSI_SGR(38;5;n)
+#define  ANSI_FG_RGB(r,g,b)      ANSI_SGR(38;2;r;g;b)
+
+#define  ANSI_FG_BLACK           ANSI_SGR(30)
+#define  ANSI_FG_RED             ANSI_SGR(31)
+#define  ANSI_FG_GREEN           ANSI_SGR(32)
+#define  ANSI_FG_YELLOW          ANSI_SGR(33)
+#define  ANSI_FG_BLUE            ANSI_SGR(34)
+#define  ANSI_FG_MAGENTA         ANSI_SGR(35)
+#define  ANSI_FG_CYAN            ANSI_SGR(36)
+#define  ANSI_FG_WHITE           ANSI_SGR(37)
+
+#define  ANSI_FG_BRIGHT_BLACK    ANSI_SGR(90)
+#define  ANSI_FG_BRIGHT_RED      ANSI_SGR(91)
+#define  ANSI_FG_BRIGHT_GREEN    ANSI_SGR(92)
+#define  ANSI_FG_BRIGHT_YELLOW   ANSI_SGR(93)
+#define  ANSI_FG_BRIGHT_BLUE     ANSI_SGR(94)
+#define  ANSI_FG_BRIGHT_MAGENTA  ANSI_SGR(95)
+#define  ANSI_FG_BRIGHT_CYAN     ANSI_SGR(96)
+#define  ANSI_FG_BRIGHT_WHITE    ANSI_SGR(97)
+
+#define  ANSI_FG_GRAY  ANSI_FG_BRIGHT_BLACK
+
+// Background {{{2
+
+#define  ANSI_BG_256_TABLE(n)    ANSI_SGR(48;5;n)
+#define  ANSI_BG_RGB(r,g,b)      ANSI_SGR(48;2;r;g;b)
+
+#define  ANSI_BG_BLACK           ANSI_SGR(40)
+#define  ANSI_BG_RED             ANSI_SGR(41)
+#define  ANSI_BG_GREEN           ANSI_SGR(42)
+#define  ANSI_BG_YELLOW          ANSI_SGR(43)
+#define  ANSI_BG_BLUE            ANSI_SGR(44)
+#define  ANSI_BG_MAGENTA         ANSI_SGR(45)
+#define  ANSI_BG_CYAN            ANSI_SGR(46)
+#define  ANSI_BG_WHITE           ANSI_SGR(47)
+
+#define  ANSI_BG_BRIGHT_BLACK    ANSI_SGR(100)
+#define  ANSI_BG_BRIGHT_RED      ANSI_SGR(101)
+#define  ANSI_BG_BRIGHT_GREEN    ANSI_SGR(102)
+#define  ANSI_BG_BRIGHT_YELLOW   ANSI_SGR(103)
+#define  ANSI_BG_BRIGHT_BLUE     ANSI_SGR(104)
+#define  ANSI_BG_BRIGHT_MAGENTA  ANSI_SGR(105)
+#define  ANSI_BG_BRIGHT_CYAN     ANSI_SGR(106)
+#define  ANSI_BG_BRIGHT_WHITE    ANSI_SGR(107)
+
+#define  ANSI_BG_GRAY  ANSI_BG_BRIGHT_BLACK
+
+//                                                   (resources) {{{1
+
+// https://en.wikipedia.org/wiki/ANSI_escape_code#Description
+// https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+// https://notes.burke.libbey.me/ansi-escape-codes
+
+// }}}1
 
 #endif // ANSI_ESC_SEQ_H_
+
+// vim: fdm=marker fmr={{{,}}}
