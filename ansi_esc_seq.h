@@ -80,8 +80,10 @@
 #define  ANSI_BLINK_RAPID    ANSI_SGR(6)
 #define  ANSI_BLINK_OFF      ANSI_SGR(6)
 
-#define  ANSI_INVERSE        ANSI_SGR(7)
-#define  ANSI_INVERSE_OFF    ANSI_SGR(27)
+#define  ANSI_REVERSE        ANSI_SGR(7)
+#define  ANSI_REVERSE_OFF    ANSI_SGR(27)
+#define  ANSI_INVERSE        ANSI_REVERSE
+#define  ANSI_INVERSE_OFF    ANSI_REVERSE_OFF
 
 #define  ANSI_CROSSED        ANSI_SGR(9)
 #define  ANSI_CROSSED_OFF    ANSI_SGR(29)
