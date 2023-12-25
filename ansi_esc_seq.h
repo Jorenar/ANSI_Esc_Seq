@@ -2,10 +2,16 @@
  * Copyright 2021-2023 Jorengarenar
  */
 
+/* Resoureces:
+ *   https://en.wikipedia.org/wiki/ANSI_escape_code#Description
+ *   https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+ *   https://notes.burke.libbey.me/ansi-escape-codes
+ */
+
 #ifndef ANSI_ESC_SEQ_H_
 #define ANSI_ESC_SEQ_H_
 
-// C0 control codes {{{1
+/* C0 control codes {{{ */
 
 #define  ANSI_BEL  "\a"
 #define  ANSI_BS   "\b"
@@ -15,7 +21,9 @@
 #define  ANSI_CR   "\r"
 #define  ANSI_ESC  "\033"
 
-// Fe Escape sequences {{{1
+/* }}} */
+
+/* Fe Escape sequences {{{ */
 
 #define  ANSI_SS2  ANSI_ESC "N"
 #define  ANSI_SS3  ANSI_ESC "O"
@@ -27,7 +35,9 @@
 #define  ANSI_PM   ANSI_ESC "^"
 #define  ANSI_APC  ANSI_ESC "_"
 
-// CSI sequences {{{1
+/* }}} */
+
+/* CSI sequences {{{ */
 
 #define  ANSI_CUU(n)    ANSI_CSI # n "A"
 #define  ANSI_CUD(n)    ANSI_CSI # n "B"
@@ -53,8 +63,9 @@
 #define  ANSI_DECTCEM_SET    ANSI_CSI "?25h"
 #define  ANSI_DECTCEM_RESET  ANSI_CSI "?25l"
 
-// Parameters {{{1
-// ED & EL {{{2
+/* }}} */
+
+/* Parameters: ED & EL {{{ */
 
 #define  ANSI_ERASE_CUR2ENDSCR    ANSI_ED(0)
 #define  ANSI_ERASE_CUR2STARTSCR  ANSI_ED(1)
@@ -64,7 +75,9 @@
 #define  ANSI_ERASE_SOL2CUR       ANSI_EL(1)
 #define  ANSI_ERASE_LINE          ANSI_EL(2)
 
-// SGR {{{2
+/* }}} */
+
+/* Parameters: SGR {{{ */
 
 #define  ANSI_RESET          ANSI_SGR(0)
 
@@ -88,8 +101,9 @@
 #define  ANSI_CROSSED        ANSI_SGR(9)
 #define  ANSI_CROSSED_OFF    ANSI_SGR(29)
 
-// Colors {{{1
-// Foreground {{{2
+/* }}} */
+
+/* Colors: Foreground {{{ */
 
 #define  ANSI_FG_256_TABLE(n)    ANSI_SGR(38;5;n)
 #define  ANSI_FG_RGB(r,g,b)      ANSI_SGR(38;2;r;g;b)
@@ -114,7 +128,9 @@
 
 #define  ANSI_FG_GRAY  ANSI_FG_BRIGHT_BLACK
 
-// Background {{{2
+/* }}} */
+
+/* Colors: Background {{{ */
 
 #define  ANSI_BG_256_TABLE(n)    ANSI_SGR(48;5;n)
 #define  ANSI_BG_RGB(r,g,b)      ANSI_SGR(48;2;r;g;b)
@@ -139,14 +155,6 @@
 
 #define  ANSI_BG_GRAY  ANSI_BG_BRIGHT_BLACK
 
-//                                                   (resources) {{{1
+/* }}} */
 
-// https://en.wikipedia.org/wiki/ANSI_escape_code#Description
-// https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
-// https://notes.burke.libbey.me/ansi-escape-codes
-
-// }}}1
-
-#endif // ANSI_ESC_SEQ_H_
-
-// vim: fdm=marker fmr={{{,}}}
+#endif /* ANSI_ESC_SEQ_H_ */
